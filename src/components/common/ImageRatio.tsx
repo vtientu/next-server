@@ -24,9 +24,13 @@ export function ImageRatio({
         fill
         className="h-full w-full rounded-md object-cover"
         {...imageProps}
+        placeholder="blur"
         onError={(e) => {
-          (e.target as HTMLImageElement).src = DEFAULT_IMAGE_SRC;
+          console.log("run 3333333333333333");
+
+          e.currentTarget.src = DEFAULT_IMAGE_SRC;
         }}
+        blurDataURL={DEFAULT_IMAGE_SRC} // Hiển thị ảnh mờ trước khi load
       />
     </AspectRatio>
   );
