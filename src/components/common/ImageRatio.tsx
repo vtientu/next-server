@@ -1,43 +1,29 @@
 import Image, { ImageProps } from "next/image";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { cn } from "@/lib/utils";
-import { AspectRatioProps } from "@radix-ui/react-aspect-ratio";
-
-const DEFAULT_IMAGE_SRC = "/images/default-image.jpg";
+import { HTMLAttributes } from "react";
 
 export function ImageRatio({
-  ratio = 16 / 9,
   imageProps,
   src,
   className,
+  alt,
   ...otherProps
 }: ImageRatioProps) {
   return (
-    <AspectRatio
-      ratio={ratio}
-      className={cn("bg-muted", className)}
-      {...otherProps}
-    >
+    <div className={cn("bg-muted relative", className)} {...otherProps}>
       <Image
         src={src}
-        alt={imageProps?.alt || "Image"}
         fill
-        className="h-full w-full rounded-md object-cover"
+        alt={alt || "Image"}
         {...imageProps}
-        placeholder="blur"
-        onError={(e) => {
-          console.log("run 3333333333333333");
-
-          e.currentTarget.src = DEFAULT_IMAGE_SRC;
-        }}
-        blurDataURL={DEFAULT_IMAGE_SRC} // Hiển thị ảnh mờ trước khi load
+        className={cn("h-auto w-auto object-cover", imageProps?.className)}
       />
-    </AspectRatio>
+    </div>
   );
 }
 
-export type ImageRatioProps = AspectRatioProps & {
+export type ImageRatioProps = HTMLAttributes<HTMLDivElement> & {
   src: string;
-  ratio?: number;
-  imageProps?: ImageProps;
+  alt?: string;
+  imageProps?: Omit<ImageProps, "src" | "alt">;
 };
