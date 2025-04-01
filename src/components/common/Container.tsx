@@ -15,7 +15,7 @@ export function Container({
   return (
     <div
       className={cn(
-        `mx-auto w-full px-4 xl:w-[1200px]`, // Responsive padding
+        `mx-auto w-full px-[15px] md:w-[750px] lg:w-[970px] xl:w-[1170px]`, // Responsive padding
         `max-w-${maxWidth}`,
         className
       )}
