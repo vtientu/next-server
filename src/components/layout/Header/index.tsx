@@ -1,7 +1,9 @@
-import { Container } from "@/components/common/Container";
-import { ImageRatio } from "@/components/common/ImageRatio";
-import { MenuCategory } from "@/components/layout/Header/MenuCategory";
-import ThemeToggle from "@/components/layout/Header/ThemeToggle";
+"use client";
+
+import { Container } from "@/components/common/container-width";
+import { ImageRatio } from "@/components/common/image-ratio";
+import { MenuCategory } from "@/components/layout/Header/menu-category";
+import ThemeToggle from "@/components/layout/Header/theme-toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,16 +17,25 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { ImageConstants } from "@/constants";
+import { useHeaderSticky } from "@/hooks/useHeaderSticky";
+import { cn } from "@/lib/utils";
 import { LogOut, Search, Settings, ShoppingCart } from "lucide-react";
 import React, { memo } from "react";
 
 const Header = () => {
+  const isSticky = useHeaderSticky();
   return (
     <div>
-      <Container className="py-2 flex items-center justify-between">
+      <section id="hero-section"></section>
+      <Container
+        className={cn(
+          "py-2 items-center justify-between",
+          isSticky ? "hidden" : "flex"
+        )}
+      >
         <ImageRatio
           src={ImageConstants.LOGO_IMAGE}
-          className="h-[30px] aspect-[4.4] bg-background"
+          className="h-[38px] aspect-[4.4] bg-background"
           imageProps={{
             className: "dark:invert",
           }}
@@ -77,7 +88,12 @@ const Header = () => {
           </DropdownMenu>
         </div>
       </Container>
-      <div className="bg-[#333] dark:bg-gray-400 py-1 justify-center flex">
+      <div
+        className={cn(
+          "bg-[#333] dark:bg-gray-400 justify-center  w-full flex h-[50px]",
+          isSticky ? "fixed z-50" : "flex"
+        )}
+      >
         <MenuCategory />
       </div>
     </div>
