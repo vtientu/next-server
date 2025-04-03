@@ -7,10 +7,9 @@ import React, { memo } from "react";
 const ShoesCard = ({ shoes }: { shoes: Shoes }) => {
   return (
     <div className="flex flex-col px-4 mb-10">
-      {/* Khi hover sản phẩm opacity sẽ giảm xuống 0.5 và tăng lại luôn lên 1 */}
       <Link
         href={`/product/${shoes.id}`}
-        className="relative cursor-pointer aspect-[5/4] hover:scale-105 transition-all duration-500 h-[180px]"
+        className="relative cursor-pointer aspect-[5/4] hover:scale-105 transition-all duration-500 h-[160px] xl:h-[180px]"
       >
         <Image
           fill
@@ -34,7 +33,7 @@ const ShoesCard = ({ shoes }: { shoes: Shoes }) => {
       <div className="flex flex-col gap-5 text-center">
         <Link
           href={`/product/${shoes.id}`}
-          className="font-semibold  cursor-pointer"
+          className="font-semibold cursor-pointer leading-[22px] h-[44px]"
         >
           {shoes.name}
         </Link>

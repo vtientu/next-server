@@ -74,10 +74,6 @@ const Header = () => {
                   <Settings width={20} height={20} />
                 </DropdownMenuShortcut>
               </DropdownMenuItem>
-              <DropdownMenuItem className="focus:font-semibold">
-                Dark Mode
-                <DropdownMenuShortcut className="h-auto"></DropdownMenuShortcut>
-              </DropdownMenuItem>
               <DropdownMenuItem className="text-red-600 focus:font-semibold focus:text-red-600">
                 Đăng xuất
                 <DropdownMenuShortcut>

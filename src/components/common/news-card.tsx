@@ -25,7 +25,7 @@ const NewsCard = ({ news }: { news: News }) => {
       </div>
       <Link
         href={`/news/${news.id}`}
-        className="text-primary flex flex-row items-center uppercase font-semibold h-10"
+        className="text-primary flex flex-row items-center uppercase font-semibold h-10 hover:text-blue-800"
       >
         Xem thêm <ArrowRight width={20} height={15} />
       </Link>

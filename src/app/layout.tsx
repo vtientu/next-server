@@ -3,6 +3,7 @@ import { Roboto_Condensed } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 
 const roboto = Roboto_Condensed({
   variable: "--font-roboto-condensed",
@@ -31,6 +32,7 @@ export default function RootLayout({
         >
           <Header />
           {children}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
