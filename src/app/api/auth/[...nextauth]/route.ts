@@ -4,12 +4,15 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import mongoose from '@/database/mongoose'
 import User from '@/models/user'
 import bcrypt from 'bcrypt'
+import { loginSchema } from '@/schema/auth'
+import { formatZodError } from '@/app/utils/format'
+import { AUTH_ERRORS } from '@/constants/auth'
 
 const handler = NextAuth({
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_SECRET!
+      clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.NEXT_PUBLIC_GOOGLE_SECRET!
     }),
     CredentialsProvider({
       name: 'Credentials',
@@ -18,30 +21,62 @@ const handler = NextAuth({
         password: { label: 'Password', type: 'password' }
       },
       async authorize(credentials) {
-        if (!credentials) {
-          return null
-        }
-        await mongoose.connectDB()
-        const user = await User.findOne({ email: credentials.email })
-        if (!user) {
-          return null
-        }
-        const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password)
-        if (!isPasswordCorrect) {
-          return null
-        }
-        return {
-          id: user._id.toString(),
-          email: user.email,
-          name: user.fullName,
-          image: user.avatar
+        try {
+          if (!credentials) {
+            throw new Error(
+              JSON.stringify({
+                code: AUTH_ERRORS.MISSING_CREDENTIALS,
+                message: 'Vui lòng nhập email và mật khẩu'
+              })
+            )
+          }
+          const { email, password } = credentials
+          const parseResult = loginSchema.safeParse({
+            email,
+            password
+          })
+
+          if (!parseResult.success) {
+            throw new Error(
+              JSON.stringify({
+                code: AUTH_ERRORS.VALIDATION_ERROR,
+                errors: formatZodError(parseResult.error)
+              })
+            )
+          }
+
+          await mongoose.connectDB()
+          const user = await User.findOne({ email: parseResult.data.email })
+          if (!user) {
+            throw new Error(
+              JSON.stringify({
+                code: AUTH_ERRORS.INVALID_CREDENTIALS,
+                message: 'Email hoặc mật khẩu không chính xác'
+              })
+            )
+          }
+          const isPasswordCorrect = await bcrypt.compare(parseResult.data.password, user.password)
+          if (!isPasswordCorrect) {
+            throw new Error(
+              JSON.stringify({
+                code: AUTH_ERRORS.INVALID_CREDENTIALS,
+                message: 'Email hoặc mật khẩu không chính xác'
+              })
+            )
+          }
+          return {
+            id: user._id.toString(),
+            email: user.email,
+            name: user.fullName,
+            image: user.avatar
+          }
+        } catch (error: any) {
+          console.log(error)
+          throw new Error(error.message)
         }
       }
     })
   ],
-  pages: {
-    signIn: '/login' // sẽ redirect nếu chưa login
-  },
   secret: process.env.NEXTAUTH_SECRET
 })
 

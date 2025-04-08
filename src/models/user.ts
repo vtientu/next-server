@@ -1,36 +1,36 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose'
 
-const DOCUMENT_NAME = "User";
-const COLLECTION_NAME = "users";
+const DOCUMENT_NAME = 'User'
+const COLLECTION_NAME = 'users'
 
 const UserSchema = new Schema(
   {
     fullName: {
       type: String,
-      required: true,
+      required: true
     },
     email: {
       type: String,
       required: true,
-      unique: true,
+      unique: true
     },
     password: {
       type: String,
-      required: true,
+      required: true
     },
     dateOfBirth: Date,
     gender: {
       type: String,
-      enum: ["male", "female", "other"],
-      default: "other",
+      enum: ['male', 'female', 'other'],
+      default: 'other'
     },
-    avatar: String,
+    avatar: String
   },
   {
     timestamps: true,
-    collection: COLLECTION_NAME,
+    collection: COLLECTION_NAME
   }
-);
+)
 
-const User = model(DOCUMENT_NAME, UserSchema);
-export default User;
+const User = model(DOCUMENT_NAME, UserSchema)
+export default User

@@ -1,40 +1,35 @@
-import type { Metadata } from "next";
-import { Roboto_Condensed } from "next/font/google";
-import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import type { Metadata } from 'next'
+import { Roboto_Condensed } from 'next/font/google'
+import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer'
+import { Providers } from '@/app/providers'
+import './globals.css'
 
 const roboto = Roboto_Condensed({
-  variable: "--font-roboto-condensed",
-  subsets: ["vietnamese"],
-  weight: ["400", "500", "600", "700"],
-});
+  variable: '--font-roboto-condensed',
+  subsets: ['vietnamese'],
+  weight: ['400', '500', '600', '700']
+})
 
 export const metadata: Metadata = {
-  title: "Tú Shoes Shop",
-  description: "Tú Shoes Shop",
-};
+  title: 'Tú Shoes Shop',
+  description: 'Tú Shoes Shop'
+}
 
 export default function RootLayout({
-  children,
+  children
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning={true}>
+    <html lang='en' suppressHydrationWarning={true}>
       <body className={`${roboto.className} antialiased`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <Providers>
           <Header />
           {children}
           <Footer />
-        </ThemeProvider>
+        </Providers>
       </body>
     </html>
-  );
+  )
 }

@@ -1,4 +1,5 @@
-import { Button } from '@/components/ui/button'
+'use client'
+
 import {
   Dialog,
   DialogContent,
@@ -8,30 +9,69 @@ import {
   DialogTitle,
   DialogTrigger
 } from '@/components/ui/dialog'
-import { memo } from 'react'
+import { FormProvider, SubmitHandler, FieldValues, UseFormReturn } from 'react-hook-form'
+import { DialogProps } from '@radix-ui/react-dialog'
+import { memo, ReactNode } from 'react'
 
-const Modal = ({ title, trigger, description, children, actions }: ModalProps) => {
+type ModalProps<T extends FieldValues = FieldValues> = DialogProps & {
+  title?: string
+  trigger: React.ReactNode
+  modelHeader?: ReactNode
+  description?: string
+  children: ReactNode
+  actions?: ReactNode
+  formProps?: {
+    methods: UseFormReturn<T>
+    onSubmit: SubmitHandler<T>
+  }
+}
+
+const Modal = <T extends FieldValues>({
+  title,
+  modelHeader,
+  trigger,
+  description,
+  children,
+  actions,
+  formProps,
+  ...props
+}: ModalProps<T>) => {
   return (
-    <Dialog modal={true}>
+    <Dialog modal {...props}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className='sm:max-w-[425px]'>
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-          {description && <DialogDescription>{description}</DialogDescription>}
-        </DialogHeader>
-        {children}
-        {actions && <DialogFooter>{actions}</DialogFooter>}
+        {formProps ? (
+          <FormProvider {...formProps.methods}>
+            <form onSubmit={formProps.methods.handleSubmit(formProps.onSubmit)} className='space-y-4'>
+              {modelHeader ? (
+                <DialogHeader>{modelHeader}</DialogHeader>
+              ) : (
+                <DialogHeader>
+                  {title && <DialogTitle>{title}</DialogTitle>}
+                  {description && <DialogDescription>{description}</DialogDescription>}
+                </DialogHeader>
+              )}
+              {children}
+              {actions && <DialogFooter>{actions}</DialogFooter>}
+            </form>
+          </FormProvider>
+        ) : (
+          <>
+            {modelHeader ? (
+              <DialogHeader>{modelHeader}</DialogHeader>
+            ) : (
+              <DialogHeader>
+                {title && <DialogTitle>{title}</DialogTitle>}
+                {description && <DialogDescription>{description}</DialogDescription>}
+              </DialogHeader>
+            )}
+            {children}
+            {actions && <DialogFooter>{actions}</DialogFooter>}
+          </>
+        )}
       </DialogContent>
     </Dialog>
   )
 }
 
 export default memo(Modal)
-
-type ModalProps = {
-  title: string
-  trigger: React.ReactNode
-  description?: string
-  children: React.ReactNode
-  actions?: React.ReactNode
-}

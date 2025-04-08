@@ -2,25 +2,15 @@
 
 import { Container } from '@/components/common/container-width'
 import { ImageRatio } from '@/components/common/image-ratio'
-import LoginModal from '@/components/common/modals/login-modal'
+import AvatarHeader from '@/components/layout/Header/AvatarHeader'
 import { MenuCategory } from '@/components/layout/Header/menu-category'
 import ThemeToggle from '@/components/layout/Header/theme-toggle'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
 import { Input } from '@/components/ui/input'
 import { ImageConstants } from '@/constants'
 import { useHeaderSticky } from '@/hooks/useHeaderSticky'
 import { cn } from '@/lib/utils'
-import { LogOut, Search, Settings, ShoppingCart } from 'lucide-react'
+import { Search, ShoppingCart } from 'lucide-react'
 import React, { memo } from 'react'
 
 const Header = () => {
@@ -54,32 +44,8 @@ const Header = () => {
             </div>
           </div>
           <ThemeToggle />
-          <DropdownMenu>
-            <DropdownMenuTrigger className='focus-visible:outline-none select-none'>
-              <Avatar className='cursor-pointer'>
-                <AvatarImage />
-                <AvatarFallback>T</AvatarFallback>
-              </Avatar>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel>Văn Tiến Tú</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className='focus:font-semibold'>
-                Cài đặt
-                <DropdownMenuShortcut>
-                  <Settings width={20} height={20} />
-                </DropdownMenuShortcut>
-              </DropdownMenuItem>
-              <DropdownMenuItem className='text-red-600 focus:font-semibold focus:text-red-600'>
-                Đăng xuất
-                <DropdownMenuShortcut>
-                  <LogOut width={20} height={20} />
-                </DropdownMenuShortcut>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <AvatarHeader />
         </div>
-        <LoginModal />
       </Container>
       <div
         className={cn(

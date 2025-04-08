@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const MONGODB_URI = process.env.MONGODB_URI || ''
+const MONGODB_URI = process.env.NEXT_PUBLIC_MONGO_URL || ''
 
 class Database {
   private static instance: Database
@@ -25,7 +25,6 @@ class Database {
         mongoose.set('debug', true)
         mongoose.set('debug', { color: true })
       }
-      console.log({ MONGODB_URI })
 
       await mongoose.connect(MONGODB_URI, {
         maxPoolSize: 50 // Tối 50 connections và có thể tái sử dụng connect. Default: 100
