@@ -4,7 +4,7 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import mongoose from '@/database/mongoose'
 import User from '@/models/user'
 import bcrypt from 'bcrypt'
-import { loginSchema } from '@/schema/auth'
+import { loginSchema } from '@/schema/auth.schema'
 import { formatZodError } from '@/app/utils/format'
 import { AUTH_ERRORS } from '@/constants/auth'
 

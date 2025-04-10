@@ -1,7 +1,7 @@
-import { model, Schema } from 'mongoose'
+import { InferSchemaType, model, Schema } from 'mongoose'
 
 const COLLECTION_NAME = 'products'
-const DOCUMENT_NAME = 'product'
+const DOCUMENT_NAME = 'Product'
 
 const productSchema = new Schema(
   {
@@ -10,14 +10,26 @@ const productSchema = new Schema(
     description: { type: String, required: true },
     images: [
       {
-        url: String,
-        public_id: String
+        url: { type: String, required: true },
+        public_id: { type: String, required: true }
+      }
+    ],
+    thumbnails: [
+      {
+        url: { type: String, required: true },
+        public_id: { type: String, required: true }
+      }
+    ],
+    sizes: [
+      {
+        size: { type: String, required: true },
+        stock: { type: Number, required: true, min: 0, default: 0 }
       }
     ],
     category: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
     isPublic: { type: Boolean, default: false, index: true, select: false },
-    createdBy: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    updatedBy: { type: Schema.Types.ObjectId, ref: 'User', required: true }
+    createdBy: { type: Schema.Types.ObjectId, ref: 'User', required: true, select: false },
+    updatedBy: { type: Schema.Types.ObjectId, ref: 'User', required: true, select: false }
   },
   {
     collection: COLLECTION_NAME,
@@ -25,4 +37,9 @@ const productSchema = new Schema(
   }
 )
 
-export const Product = model(DOCUMENT_NAME, productSchema, COLLECTION_NAME)
+productSchema.index({ name: 'text', description: 'text' })
+productSchema.index({ category: 1, 'sizes.size': 1 })
+
+const ProductModel = model(DOCUMENT_NAME, productSchema, COLLECTION_NAME)
+export type ProductDocument = InferSchemaType<typeof productSchema>
+export default ProductModel

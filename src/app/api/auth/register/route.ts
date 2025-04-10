@@ -1,5 +1,5 @@
 import User from '@/models/user'
-import { registerSchema } from '@/schema/auth'
+import { registerSchema } from '@/schema/auth.schema'
 import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcrypt'
 import { formatZodError } from '@/app/utils/format'
