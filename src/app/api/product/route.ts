@@ -43,7 +43,13 @@ export async function GET(req: NextRequest) {
       ProductModel.countDocuments(filter)
     ])
 
-    return NextResponse.json({ data: products, pagination: { page, limit, total } })
+    return NextResponse.json({
+      status: 200,
+      data: {
+        products,
+        totalData: total
+      }
+    })
   } catch (error) {
     logger.error(error)
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
