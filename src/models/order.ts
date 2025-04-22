@@ -1,3 +1,4 @@
+import { DISCOUNT_TYPE, ORDER_STATUS, PAYMENT_METHOD, PAYMENT_STATUS } from '@/constants/app'
 import { Schema, model } from 'mongoose'
 
 const COLLECTION_NAME = 'orders'
@@ -16,10 +17,10 @@ const orderSchema = new Schema(
         discount: {
           type: {
             type: String,
-            enum: ['percent', 'fixed'],
-            default: null
+            enum: Object.values(DISCOUNT_TYPE),
+            required: true
           },
-          value: { type: Number, default: 0 }
+          value: { type: Number, required: true }
         }
       }
     ],
@@ -33,18 +34,18 @@ const orderSchema = new Schema(
     },
     paymentMethod: {
       type: String,
-      enum: ['cod', 'vnpay', 'momo'],
+      enum: Object.values(PAYMENT_METHOD),
       required: true
     },
     paymentStatus: {
       type: String,
-      enum: ['pending', 'paid', 'failed'],
-      default: 'pending'
+      enum: Object.values(PAYMENT_STATUS),
+      default: PAYMENT_STATUS.PENDING
     },
     orderStatus: {
       type: String,
-      enum: ['pending', 'confirmed', 'delivering', 'done', 'cancelled'],
-      default: 'pending'
+      enum: Object.values(ORDER_STATUS),
+      default: ORDER_STATUS.PENDING
     },
     totalPrice: { type: Number, required: true }
   },

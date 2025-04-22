@@ -1,5 +1,5 @@
-// models/discount.model.ts
-import { Schema, model } from 'mongoose'
+import { DISCOUNT_APPLY_TO, DISCOUNT_TYPE } from '@/constants/app'
+import { Schema, model, models } from 'mongoose'
 
 const COLLECTION_NAME = 'discounts'
 const DOCUMENT_NAME = 'Discount'
@@ -9,7 +9,7 @@ const discountSchema = new Schema(
     title: { type: String, required: true },
     description: { type: String },
 
-    type: { type: String, enum: ['percent', 'fixed'], required: true },
+    type: { type: String, enum: Object.values(DISCOUNT_TYPE), required: true },
     value: { type: Number, required: true },
 
     startDate: { type: Date, required: true },
@@ -17,7 +17,7 @@ const discountSchema = new Schema(
 
     applyTo: {
       type: String,
-      enum: ['all', 'category', 'product'],
+      enum: Object.values(DISCOUNT_APPLY_TO),
       required: true
     },
 
@@ -30,5 +30,5 @@ const discountSchema = new Schema(
   }
 )
 
-const DiscountModel = model(DOCUMENT_NAME, discountSchema, COLLECTION_NAME)
+const DiscountModel = models.Discount || model(DOCUMENT_NAME, discountSchema, COLLECTION_NAME)
 export default DiscountModel

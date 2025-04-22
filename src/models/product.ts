@@ -1,4 +1,4 @@
-import { InferSchemaType, model, Schema } from 'mongoose'
+import { InferSchemaType, model, models, Schema } from 'mongoose'
 
 const COLLECTION_NAME = 'products'
 const DOCUMENT_NAME = 'Product'
@@ -42,6 +42,6 @@ const productSchema = new Schema(
 productSchema.index({ name: 'text', description: 'text' })
 productSchema.index({ category: 1, 'sizes.size': 1 })
 
-const ProductModel = model(DOCUMENT_NAME, productSchema, COLLECTION_NAME)
-export type ProductDocument = InferSchemaType<typeof productSchema>
+const ProductModel = models.Product || model(DOCUMENT_NAME, productSchema, COLLECTION_NAME)
+export type ProductDocument = InferSchemaType<typeof productSchema> & { _id: string }
 export default ProductModel

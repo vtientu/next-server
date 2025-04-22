@@ -1,5 +1,6 @@
 import logger from '@/app/utils/logger'
 import { parseQueryWithZod } from '@/app/utils/zod.utils'
+import mongoose from '@/database/mongoose'
 import ProductModel, { ProductDocument } from '@/models/product'
 import { productQuerySchema } from '@/schema/product.schema'
 import { FilterQuery } from 'mongoose'
@@ -7,6 +8,7 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(req: NextRequest) {
   try {
+    await mongoose.connectDB()
     const { searchParams } = new URL(req.url)
     const rawQuery = Object.fromEntries(searchParams.entries())
     const parsedQuery = parseQueryWithZod(productQuerySchema, rawQuery)

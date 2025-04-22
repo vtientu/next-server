@@ -1,9 +1,10 @@
 import ShoesCard from '@/components/common/product-card'
 import { ImageConstants } from '@/constants'
-import { ProductDocument } from '@/models/product'
-import React from 'react'
+import { ProductWithDiscount } from '@/types/product.types'
+import React, { Fragment } from 'react'
 
-const SectionProduct = ({ title, products }: { title: string; products: ProductDocument[] }) => {
+const SectionProduct = ({ title, products }: { title: string; products: ProductWithDiscount[] }) => {
+  if (products.length === 0) return <Fragment />
   return (
     <div className='flex flex-col gap-5'>
       <div className='text-center mx-auto'>
@@ -11,7 +12,7 @@ const SectionProduct = ({ title, products }: { title: string; products: ProductD
       </div>
       <div className='grid grid-cols-2 sm:grid-cols-4'>
         {products.map((product) => (
-          <ShoesCard key={product.id} shoes={product} />
+          <ShoesCard key={product._id} product={product} />
         ))}
       </div>
     </div>

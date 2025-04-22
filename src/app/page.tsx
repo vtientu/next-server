@@ -4,10 +4,13 @@ import HomeBanner from '@/components/sections/home-banner'
 import SectionNews from '@/components/sections/section-news'
 import SectionProduct from '@/components/sections/section-products'
 import { ImageConstants } from '@/constants'
+import { ProductWithDiscount } from '@/types/product.types'
 import { Suspense } from 'react'
 
 export default async function Home() {
-  const responseFeatured = await fetch('/api/product/featured', {
+  let featuredProducts: ProductWithDiscount[] = []
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
+  const responseFeatured = await fetch(`${baseUrl}/api/product/featured`, {
     method: 'GET'
   })
     .then((res) => res.json())
@@ -15,7 +18,9 @@ export default async function Home() {
       console.log(err)
     })
 
-  const featuredProducts = responseFeatured.data.products
+  if (responseFeatured.ok) {
+    featuredProducts = responseFeatured.data.products
+  }
 
   return (
     <div className='w-full gap-8 flex flex-col'>

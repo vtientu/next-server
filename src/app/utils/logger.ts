@@ -12,8 +12,8 @@ const logFormat = winston.format.combine(
   })
 )
 
-const infoLogDir = path.join('src/v1/logs/info')
-const errorLogDir = path.join('src/v1/logs/error')
+const infoLogDir = path.join('src/logs/info')
+const errorLogDir = path.join('src/logs/error')
 
 if (!fs.existsSync(infoLogDir)) fs.mkdirSync(infoLogDir, { recursive: true })
 if (!fs.existsSync(errorLogDir)) fs.mkdirSync(errorLogDir, { recursive: true })
