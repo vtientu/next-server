@@ -35,9 +35,15 @@ const ShoesCard = ({ product }: { product: ProductWithDiscount }) => {
           {product.name}
         </Link>
         <div className='flex items-center justify-center space-x-2 flex-wrap text-[15px]'>
-          <p className='text-md font-semibold text-[#f00]'>{formatPrice(product.price)}</p>
-          <p className='text-md line-through text-gray-400'>{formatPrice(product.price)}</p>
-          <p className='text-sm font-semibold text-[#f00]'>[ -{product.discount.value}%]</p>
+          <p className='text-md font-semibold text-[#f00]'>
+            {formatPrice(product?.discount ? product.price : product.price)}
+          </p>
+          {product?.discount && (
+            <>
+              <p className='text-md line-through text-gray-400'>{formatPrice(product.price)}</p>
+              <p className='text-sm font-semibold text-[#f00]'>[ -{product.discount.value}%]</p>
+            </>
+          )}
         </div>
       </div>
     </div>

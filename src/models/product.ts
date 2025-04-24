@@ -30,8 +30,8 @@ const productSchema = new Schema(
     category: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
     isFeatured: { type: Boolean, default: false, index: true },
     isPublic: { type: Boolean, default: false, index: true, select: false },
-    createdBy: { type: Schema.Types.ObjectId, ref: 'User', required: true, select: false },
-    updatedBy: { type: Schema.Types.ObjectId, ref: 'User', required: true, select: false }
+    createdBy: { type: Schema.Types.ObjectId, ref: 'User', select: false },
+    updatedBy: { type: Schema.Types.ObjectId, ref: 'User', select: false }
   },
   {
     collection: COLLECTION_NAME,

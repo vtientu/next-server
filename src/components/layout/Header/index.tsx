@@ -3,7 +3,7 @@
 import { Container } from '@/components/common/container-width'
 import { ImageRatio } from '@/components/common/image-ratio'
 import AvatarHeader from '@/components/layout/Header/AvatarHeader'
-import { MenuCategory } from '@/components/layout/Header/menu-category'
+import MenuCategory from '@/components/layout/Header/menu-category'
 import ThemeToggle from '@/components/layout/Header/theme-toggle'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'

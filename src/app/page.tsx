@@ -18,7 +18,7 @@ export default async function Home() {
       console.log(err)
     })
 
-  if (responseFeatured.ok) {
+  if (responseFeatured.status === 200) {
     featuredProducts = responseFeatured.data.products
   }
 

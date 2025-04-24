@@ -7,7 +7,7 @@ import InputForm from '@/components/common/form-control/InputForm'
 import { FieldValues, useForm } from 'react-hook-form'
 import { signIn } from 'next-auth/react'
 import { useState } from 'react'
-import { toast } from '@/hooks/use-toast'
+import { toast } from '@/hooks/useToast'
 import { FormMessage } from '@/components/ui/form'
 import { AUTH_ERRORS } from '@/constants/auth'
 
