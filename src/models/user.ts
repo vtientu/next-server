@@ -1,3 +1,4 @@
+import { InferSchemaType, models } from 'mongoose'
 import { Schema, model } from 'mongoose'
 
 const DOCUMENT_NAME = 'User'
@@ -32,5 +33,6 @@ const UserSchema = new Schema(
   }
 )
 
-const UserModel = model(DOCUMENT_NAME, UserSchema)
+const UserModel = models.User || model(DOCUMENT_NAME, UserSchema, COLLECTION_NAME)
+export type UserDocument = InferSchemaType<typeof UserSchema> & { _id: string }
 export default UserModel

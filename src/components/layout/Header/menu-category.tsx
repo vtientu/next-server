@@ -26,7 +26,7 @@ export default function MenuCategory() {
       description: 'Please try again later',
       variant: 'destructive'
     })
-    return <div className='text-center text-2xl font-bold text-white'>Some thing wrong</div>
+    return <div className='text-center text-xl font-bold text-white'>Some thing wrong</div>
   }
 
   if (isLoading)
