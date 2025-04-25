@@ -22,22 +22,22 @@ const logger = winston.createLogger({
   level: 'debug',
   format: logFormat,
   transports: [
-    new winston.transports.Console(),
-    new DailyRotateFile({
-      filename: path.join('src', 'logs', 'info', '%DATE%.log'),
-      datePattern: 'DD-MM-YYYY',
-      maxFiles: '14d',
-      zippedArchive: true,
-      handleExceptions: true
-    }),
-    new DailyRotateFile({
-      level: 'error',
-      filename: path.join('src', 'logs', 'error', '%DATE%.log'),
-      datePattern: 'DD-MM-YYYY',
-      maxFiles: '14d',
-      zippedArchive: true,
-      handleExceptions: true
-    })
+    new winston.transports.Console()
+    // new DailyRotateFile({
+    //   filename: path.join('src', 'logs', 'info', '%DATE%.log'),
+    //   datePattern: 'DD-MM-YYYY',
+    //   maxFiles: '14d',
+    //   zippedArchive: true,
+    //   handleExceptions: true
+    // }),
+    // new DailyRotateFile({
+    //   level: 'error',
+    //   filename: path.join('src', 'logs', 'error', '%DATE%.log'),
+    //   datePattern: 'DD-MM-YYYY',
+    //   maxFiles: '14d',
+    //   zippedArchive: true,
+    //   handleExceptions: true
+    // })
   ]
 })
 
