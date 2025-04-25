@@ -22,7 +22,7 @@ const logger = winston.createLogger({
   level: 'debug',
   format: logFormat,
   transports: [
-    ...(process.env.NODE_ENV === 'development' ? [new winston.transports.Console()] : []),
+    new winston.transports.Console(),
     new DailyRotateFile({
       filename: path.join('src', 'logs', 'info', '%DATE%.log'),
       datePattern: 'DD-MM-YYYY',
