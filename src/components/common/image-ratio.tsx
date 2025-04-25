@@ -1,5 +1,5 @@
 import Image, { ImageProps } from 'next/image'
-import { cn } from '@/lib/utils'
+import { cn } from '@/libs/utils'
 import { HTMLAttributes } from 'react'
 
 export function ImageRatio({ imageProps, src, className, alt, ...otherProps }: ImageRatioProps) {

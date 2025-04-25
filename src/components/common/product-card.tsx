@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn } from '@/libs/utils'
 import { ProductWithDiscount } from '@/types/product.types'
 import { formatPrice } from '@/utils/format.utils'
 import Image from 'next/image'

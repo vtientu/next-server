@@ -1,8 +1,7 @@
 'use client'
 
-import * as React from 'react'
 import Link from 'next/link'
-import { cn } from '@/lib/utils'
+import { cn } from '@/libs/utils'
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -12,31 +11,35 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle
 } from '@/components/ui/navigation-menu'
-import { buildCategoryTree } from '@/utils/category.utils'
+import { useCategories } from '@/hooks/useCategories'
+import { Loader2 } from 'lucide-react'
+import { toast } from '@/hooks/useToast'
 
+// Dùng client component vì ở component cha có logic useHeaderSticky
+// => Kiểm tra liên tục khi scroll nên nếu để server component sẽ bị re-render liên tục và mất hiệu ứng sticky
 export default function MenuCategory() {
-  const [navigationData, setNavigationData] = React.useState<any[]>([])
+  const { categories, isLoading, isError } = useCategories()
 
-  React.useEffect(() => {
-    const fetchNavigationData = async () => {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/category`)
+  if (isError) {
+    toast({
+      title: isError.message,
+      description: 'Please try again later',
+      variant: 'destructive'
+    })
+    return <div className='text-center text-2xl font-bold text-white'>Some thing wrong</div>
+  }
 
-      if (!res.ok) throw new Error('Failed to fetch categories')
-
-      const data = await res.json()
-
-      if (data.status === 200) {
-        setNavigationData(buildCategoryTree(data.data.categories))
-      }
-    }
-
-    fetchNavigationData()
-  }, [])
+  if (isLoading)
+    return (
+      <div className='text-center flex justify-center items-center h-full text-2xl font-bold text-white'>
+        <Loader2 className='animate-spin' />
+      </div>
+    )
 
   return (
     <NavigationMenu>
       <NavigationMenuList className='flex flex-row'>
-        {navigationData.map((item) => (
+        {categories.map((item) => (
           <NavigationMenuItem key={item._id} className='relative'>
             {item.children.length > 0 ? (
               <NavigationMenuTrigger className='uppercase bg-bg-gray-700 text-background hover:bg-bg-gray-700 hover:data-[state=open]:bg-bg-gray-700 focus:bg-bg-gray-700 focus:data-[state=open]:bg-bg-gray-700 hover:text-background focus:text-background data-[state=open]:bg-bg-gray-700 data-[state=open]:text-background'>

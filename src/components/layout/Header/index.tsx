@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { ImageConstants } from '@/constants'
 import { useHeaderSticky } from '@/hooks/useHeaderSticky'
-import { cn } from '@/lib/utils'
+import { cn } from '@/libs/utils'
 import { Search, ShoppingCart } from 'lucide-react'
 import React, { memo } from 'react'
 

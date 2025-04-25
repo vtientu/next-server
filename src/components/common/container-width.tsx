@@ -1,17 +1,13 @@
-import { cn } from "@/lib/utils";
-import { ReactNode } from "react";
+import { cn } from '@/libs/utils'
+import { ReactNode } from 'react'
 
 type ContainerProps = {
-  children: ReactNode;
-  className?: string;
-  maxWidth?: "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl"; // Giới hạn độ rộng
-};
+  children: ReactNode
+  className?: string
+  maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' // Giới hạn độ rộng
+}
 
-export function Container({
-  children,
-  className,
-  maxWidth = "xl",
-}: ContainerProps) {
+export function Container({ children, className, maxWidth = 'xl' }: ContainerProps) {
   return (
     <div
       className={cn(
@@ -22,5 +18,5 @@ export function Container({
     >
       {children}
     </div>
-  );
+  )
 }

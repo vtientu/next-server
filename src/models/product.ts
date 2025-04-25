@@ -1,4 +1,5 @@
 import { InferSchemaType, model, models, Schema } from 'mongoose'
+import slugify from 'slugify'
 
 const COLLECTION_NAME = 'products'
 const DOCUMENT_NAME = 'Product'
@@ -41,6 +42,21 @@ const productSchema = new Schema(
 
 productSchema.index({ name: 'text', description: 'text' })
 productSchema.index({ category: 1, 'sizes.size': 1 })
+
+productSchema.pre('save', async function (next) {
+  if (!this.isModified('name')) return next()
+
+  const baseSlug = slugify(this.name, { lower: true, strict: true })
+  let slug = baseSlug
+  let counter = 1
+
+  while (await ProductModel.findOne({ slug })) {
+    slug = `${baseSlug}-${counter++}`
+  }
+
+  this.slug = slug
+  next()
+})
 
 const ProductModel = models.Product || model(DOCUMENT_NAME, productSchema, COLLECTION_NAME)
 export type ProductDocument = InferSchemaType<typeof productSchema> & { _id: string }
