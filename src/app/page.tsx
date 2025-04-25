@@ -4,24 +4,19 @@ import HomeBanner from '@/components/sections/home-banner'
 import SectionNews from '@/components/sections/section-news'
 import SectionProduct from '@/components/sections/section-products'
 import { ImageConstants } from '@/constants'
+import { getFeaturedProducts } from '@/services/product.service'
 import { ProductWithDiscount } from '@/types/product.types'
 import { Suspense } from 'react'
 
 export default async function Home() {
   let featuredProducts: ProductWithDiscount[] = []
-  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
-  const responseFeatured = await fetch(`${baseUrl}/api/product/featured`, {
-    method: 'GET'
-  })
-    .then((res) => res.json())
-    .catch((err) => {
-      console.log(err)
-    })
 
-  if (responseFeatured.status === 200) {
-    featuredProducts = responseFeatured.data.products
+  try {
+    featuredProducts = await getFeaturedProducts()
+  } catch (error) {
+    console.error('Error fetching featured products:', error)
+    featuredProducts = [] // fallback để tránh crash
   }
-
   return (
     <div className='w-full gap-8 flex flex-col'>
       <Suspense fallback={<ImageRatio src={ImageConstants.BANNER_01} className='w-full h-full aspect-[2.6]' />}>
