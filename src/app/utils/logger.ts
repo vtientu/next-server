@@ -12,11 +12,11 @@ const logFormat = winston.format.combine(
   })
 )
 
-const infoLogDir = path.join(process.cwd(), 'logs', 'info')
-const errorLogDir = path.join(process.cwd(), 'logs', 'error')
+// const infoLogDir = path.join(process.cwd(), 'logs', 'info')
+// const errorLogDir = path.join(process.cwd(), 'logs', 'error')
 
-if (!fs.existsSync(infoLogDir)) fs.mkdirSync(infoLogDir, { recursive: true })
-if (!fs.existsSync(errorLogDir)) fs.mkdirSync(errorLogDir, { recursive: true })
+// if (!fs.existsSync(infoLogDir)) fs.mkdirSync(infoLogDir, { recursive: true })
+// if (!fs.existsSync(errorLogDir)) fs.mkdirSync(errorLogDir, { recursive: true })
 
 const logger = winston.createLogger({
   level: 'debug',
