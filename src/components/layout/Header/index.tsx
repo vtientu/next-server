@@ -11,6 +11,7 @@ import { ImageConstants } from '@/constants'
 import { useHeaderSticky } from '@/hooks/useHeaderSticky'
 import { cn } from '@/libs/utils'
 import { Search, ShoppingCart } from 'lucide-react'
+import Link from 'next/link'
 import React, { memo } from 'react'
 
 const Header = () => {
@@ -19,13 +20,15 @@ const Header = () => {
     <div>
       <section id='hero-section'></section>
       <Container className={cn('py-2 items-center justify-between', isSticky ? 'hidden' : 'flex')}>
-        <ImageRatio
-          src={ImageConstants.LOGO_IMAGE}
-          className='h-[38px] aspect-[4.4] bg-background'
-          imageProps={{
-            className: 'dark:invert'
-          }}
-        />
+        <Link href={'/'}>
+          <ImageRatio
+            src={ImageConstants.LOGO_IMAGE}
+            className='h-[38px] aspect-[4.4] bg-background'
+            imageProps={{
+              className: 'dark:invert'
+            }}
+          />
+        </Link>
         <div className='flex items-center border-2 border-gray-500 w-[30%] h-[30px]'>
           <Input
             className='focus:outline-none focus-visible:ring-0 border-0 shadow-none h-auto'
