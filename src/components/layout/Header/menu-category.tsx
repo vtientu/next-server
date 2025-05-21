@@ -46,7 +46,7 @@ export default function MenuCategory() {
                 {item.name}
               </NavigationMenuTrigger>
             ) : (
-              <Link href={`/category/${item._id}`} legacyBehavior passHref>
+              <Link href={`/category/${item._id}`}>
                 <NavigationMenuLink
                   className={cn(
                     navigationMenuTriggerStyle(),

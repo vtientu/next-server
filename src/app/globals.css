@@ -7,6 +7,9 @@
 }
 
 @layer base {
+  body {
+    overflow-y: auto;
+  }
   :root {
     --background: 0 0% 100%;
 
